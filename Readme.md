@@ -14,3 +14,4 @@ Dependencies:
 Python 3.6+
 nltk
 transformers
+tensorflow
