@@ -71,37 +71,6 @@ def get_wordnet_pos(tag):
     else:
         return None
 
-def lemmatize_words(words):
-    """
-    Lemmatize a list of words.
-
-    This function takes a list of words, determines the part of speech for each word, 
-    and then lemmatizes it (converts it to its base or dictionary form) according 
-    to its part of speech. It utilizes the NLTK library's WordNetLemmatizer 
-    and the part-of-speech tagging to accurately lemmatize each word.
-
-    Parameters:
-    - words: A list of words (strings) that you want to lemmatize.
-
-    Returns:
-    - A list of lemmatized words.
-
-    Note: This function requires nltk's WordNetLemmatizer and pos_tag to be imported, 
-    along with the wordnet corpus and a function get_wordnet_pos(tag) that converts 
-    the part-of-speech tagging conventions between nltk and wordnet.
-    """
-    lemmatizer = WordNetLemmatizer()
-    lemmatized_words = []
-    
-    # Get POS tag for each word
-    pos_tagged = pos_tag(words)
-    
-    for word, tag in pos_tagged:
-        wordnet_pos = get_wordnet_pos(tag) or wordnet.NOUN
-        lemmatized_word = lemmatizer.lemmatize(word, pos=wordnet_pos)
-        lemmatized_words.append(lemmatized_word)
-        
-    return lemmatized_words
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 

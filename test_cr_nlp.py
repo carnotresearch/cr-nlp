@@ -16,10 +16,6 @@ def test_analyze_sentiment():
     assert 'label' in result
     assert result['label'] in ['POSITIVE', 'NEGATIVE']
 
-def test_lemmatize_words():
-    words = ['running', 'jumps', 'easily']
-    lemmatized_words = lemmatize_words(words)
-    assert lemmatized_words == ['run', 'jump', 'easily']  # Expected lemmatized forms
 
 def test_analyze_sentiment_vader():
     text = "I really hate this weather!"
