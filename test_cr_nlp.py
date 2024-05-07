@@ -1,5 +1,5 @@
 import pytest
-from cr_nlp import tokenize_text, analyze_sentiment, lemmatize_words, analyze_sentiment_vader, stem_words
+from cr_nlp import tokenize_text, analyze_sentiment, analyze_sentiment_vader, stem_words
 
 # Assuming your_module_name is the name of the Python file containing your code.
 
