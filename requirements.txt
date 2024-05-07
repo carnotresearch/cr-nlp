@@ -1,3 +1,4 @@
 transformers 
 nltk
 tensorflow
+tf_keras

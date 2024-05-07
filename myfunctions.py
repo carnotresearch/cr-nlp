@@ -1,7 +1,10 @@
 from transformers import AutoTokenizer
 from transformers import pipeline
 import nltk
-
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+from nltk import pos_tag
+nltk.download('vader_lexicon')
 
 def tokenize_text(text, model_name="bert-base-uncased"):
     """
@@ -22,34 +25,38 @@ def tokenize_text(text, model_name="bert-base-uncased"):
 
     return tokens
 
-def analyze_sentiment(text, model_name="nlptown/bert-base-multilingual-uncased-sentiment"):
+
+def analyze_sentiment(sentence: str) -> dict:
     """
-    Analyze sentiment of a given text using a pre-trained sentiment analysis model.
+    Analyze the sentiment of a given sentence using a pre-trained BERT model.
+
+    This function utilizes the 'sentiment-analysis' pipeline from the Hugging Face
+    transformers library, which provides an easy-to-use interface to a BERT model
+    pre-trained on sentiment analysis tasks.
 
     Parameters:
-    - text (str): The input text for sentiment analysis.
-    - model_name (str): The name of the pre-trained sentiment analysis model.
-                       Default is "nlptown/bert-base-multilingual-uncased-sentiment".
+    - sentence (str): The sentence for which to analyze the sentiment.
 
     Returns:
-    - sentiment (str): The predicted sentiment (e.g., "POSITIVE", "NEGATIVE", "NEUTRAL").
-    - confidence (float): The confidence score associated with the predicted sentiment.
+    - dict: A dictionary containing the label ('POSITIVE' or 'NEGATIVE') and the
+            associated confidence score.
+    
+    Example usage:
+    sentiment = analyze_sentiment("I love this product!")
+    print(sentiment)  # Output might look like: {'label': 'POSITIVE', 'score': 0.999}
     """
 
-    sentiment_analyzer = pipeline('sentiment-analysis', model=model_name)
+    # Load the sentiment analysis pipeline
+    classifier = pipeline('sentiment-analysis')
+
+    # Analyze the sentiment of the sentence
+    results = classifier(sentence)
+
+    # Return the first result (the most likely sentiment)
+    return results[0]
 
 
-    result = sentiment_analyzer(text)
 
-
-    sentiment = result[0]['label']
-    confidence = result[0]['score']
-
-    return sentiment, confidence
-
-from nltk.stem import WordNetLemmatizer
-from nltk.corpus import wordnet
-from nltk import pos_tag
 
 # Helper function to convert NLTK POS tags to WordNet POS tags
 def get_wordnet_pos(tag):
@@ -100,7 +107,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 def analyze_sentiment_vader(text):
-    nltk.download('vader_lexicon')
     """
     Analyzes the sentiment of a given text using VADER sentiment analysis.
 
